@@ -19,7 +19,6 @@ namespace MyShop.DataAccess.InMemory
             if(products == null)
             {
                 products = new List<Product>();
-
             }
         }
 
@@ -78,9 +77,6 @@ namespace MyShop.DataAccess.InMemory
             {
                 throw new Exception("Product not found!");
             }
-
         }
-
-
     }
 }
