@@ -3,14 +3,39 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MyShop.Core.Contracts;
+using MyShop.Core.Models;
 
 namespace MyShop.WebUI.Controllers
 {
     public class HomeController : Controller
     {
+        IRepository<Product> context;
+        IRepository<ProductCategory> productCategories;
+
+        public HomeController(IRepository<Product> productContext, IRepository<ProductCategory> productCategoryContext)
+        {
+            context = productContext;
+            productCategories = productCategoryContext;
+        }
+
         public ActionResult Index()
         {
-            return View();
+            var products = context.Collection().ToList();
+            return View(products);
+        }
+
+        public ActionResult Details(string Id)
+        {
+            var product = context.Find(Id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                return View(product);
+            }
         }
 
         public ActionResult About()
